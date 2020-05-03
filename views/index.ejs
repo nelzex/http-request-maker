@@ -28,11 +28,11 @@
     
                 <div class="form-group">
                     <h3>Request Response</h3>
-                    <textarea name="response" id="" cols="50" rows="20"> <%- data.response %> </textarea>
+                    <textarea name="response" id="" cols="50" rows="20"> <%= data.response %> </textarea>
                 </div>
             </form>
         </div>
-        <h3>Status: <%= data.status %></h3>
+        <h3>Status: <%= data.status %> <%= data.statusMessage %></h3>
     </div>
 </body>
 </html>

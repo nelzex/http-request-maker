@@ -6,16 +6,23 @@ router.use(express.json());
 router.use(express.urlencoded({extended: false}));
 
 router.get('/',(req,res) =>{
-    res.render('index',{data:{response:null,status:null}});
+    res.render('index',{data:{response:null,status:null,statusMessage:null}});
 })
+
 router.post('/', async (req,res) =>{
 
+    res.setTimeout(8000, function(){
+        console.log('Request Failed');
+        res.render('index',{data:{response:null,status:500,statusMessage:'Bad Request'}});
+    })
 
     const{url,message} = req.body;
     var method_lower = req.body.method;
     var method = method_lower.toUpperCase(); //Convert to uppercase
     var response;
     var status;
+    var statusMessage;
+
 
     try {
         if(method === "GET"){
@@ -23,14 +30,26 @@ router.post('/', async (req,res) =>{
             try{
                 response = await axios.get(url);
                 status = response.status;
+                statusMessage = response.statusText;
+                console.log(response);
                 response = JSON.stringify(response.data,undefined,4);
-                res.render('index',{data:{response,status}});
+                res.render('index',{data:{response,status,statusMessage}});
 
             }
             catch(error){
-                response = error.repsonse.data;
-                status = error.response.status;
-                res.render('index',{data:{response,status}});
+                console.log(error);
+                if(typeof(error.response.data) !== 'undefined'){
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = error.response.status;
+                    statusMessage = error.response.statusText;
+                }
+                else{
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = 400;
+                    statusMessage = 'Bad Request';
+                }
+                
+                res.render('index',{data:{response,status,statusMessage}});
             }
             
         }
@@ -39,14 +58,25 @@ router.post('/', async (req,res) =>{
             try{
                 response = await axios.post(url,message);
                 status = response.status;
+                statusMessage = response.statusText;
                 response = JSON.stringify(response.data,undefined,4);
-                res.render('index',{data:{response,status}});
+                res.render('index',{data:{response,status,statusMessage}});
                 //console.log(response);
             }
             catch(error){
-                response = error.response.data;
-                status = error.response.status;
-                res.render('index',{data:{response,status}});
+                console.log(error);
+                if(typeof(error.response.data) !== 'undefined'){
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = error.response.status;
+                    statusMessage = error.response.statusText;
+                }
+                else{
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = 400;
+                    statusMessage = 'Bad Request';
+                }
+                
+                res.render('index',{data:{response,status,statusMessage}});
 
 
                 //console.log(response);
@@ -57,14 +87,24 @@ router.post('/', async (req,res) =>{
             try{
                 response = await axios.put(url,message);
                 status = response.status;
+                statusMessage = response.statusText;
                 response = JSON.stringify(response.data,undefined,4);
-                res.render('index',{data:{response,status}});
+                res.render('index',{data:{response,status,statusMessage}});
 
             }
             catch(error){
-                response = error.response.data;
-                status = error.response.status;
-                res.render('index',{data:{response,status}});
+                if(typeof(error.response.data) !== 'undefined'){
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = error.response.status;
+                    statusMessage = error.response.statusText;
+                }
+                else{
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = 400;
+                    statusMessage = 'Bad Request';
+                }
+                
+                res.render('index',{data:{response,status,statusMessage}});
 
             }
         }
@@ -73,29 +113,50 @@ router.post('/', async (req,res) =>{
             try{
                 response = await axios.delete(url,message);
                 status = response.status;
+                statusMessage = response.statusText;
                 response = JSON.stringify(response.data, undefined, 4);
-                res.render('index',{data:{response,status}});
+                res.render('index',{data:{response,status,statusMessage}});
                 
 
             }
             catch(error){
-                response = error.response.data;
-                status = error.response.status;
-                res.render('index',{data:{response,status}});
+                if(typeof(error.response.data) !== 'undefined'){
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = error.response.status;
+                    statusMessage = error.response.statusText;
+                }
+                else{
+                    response = JSON.stringify(error.response.data,undefined,4);
+                    status = 400;
+                    statusMessage = 'Bad Request';
+                }
+                
+                res.render('index',{data:{response,status,statusMessage}});
 
             }
         }
     } catch (error){
         
-        repsonse = error.message;
+        if(typeof(error.response.data) !== 'undefined'){
+            response = JSON.stringify(error.response.data,undefined,4);
+            status = error.response.status;
+            statusMessage = error.response.statusText;
+        }
+        else{
+            response = JSON.stringify(error.response.data,undefined,4);
+            status = 400;
+            statusMessage = 'Bad Request';
+        }
+        
         console.log(response);
-        res.render('index',{data:{response,status:500}});
+        res.render('index',{data:{response,status,statusMessage}});
 
     }
 
 
 
 });
+
 
 
 
