@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>HTTP Requester</title>
+</head>
+<body>
+    <div class="container">
+        <h2>HTTP Request Sender</h2>
+        <div class="my-form">
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="url" >URL</label>
+                    <input type="text" name="url" required placeholder = "http://website.com"> 
+                </div>
+                <div class ="form-group">
+                    <input type="text" name="method" required placeholder = "GET/POST/PUT/DELETE" >
+                </div>
+                <div class="form-group">
+                    <button>Send Request</button>
+                </div>
+                <div class="form-group">
+                    <h3>Message Body</h3>
+                    <textarea name="message" id="" cols="50" rows="20" ></textarea>
+                </div>    
+    
+                <div class="form-group">
+                    <h3>Request Response</h3>
+                    <textarea name="response" id="" cols="50" rows="20"> <%- data.response %> </textarea>
+                </div>
+            </form>
+        </div>
+        <h3>Status: <%= data.status %></h3>
+    </div>
+</body>
+</html>

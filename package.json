@@ -1,0 +1,20 @@
+{
+  "name": "httprequester",
+  "version": "1.0.0",
+  "description": "A simple http request sender using the common http verbs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1"
+  }
+}
