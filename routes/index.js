@@ -11,7 +11,9 @@ router.get('/',(req,res) =>{
 router.post('/', async (req,res) =>{
 
 
-    const{url,message,method} = req.body;
+    const{url,message} = req.body;
+    var method_lower = req.body.method;
+    var method = method_lower.toUpperCase(); //Convert to uppercase
     var response;
     var status;
 
